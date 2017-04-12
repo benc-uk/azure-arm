@@ -1,0 +1,106 @@
+{
+   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+   "contentVersion": "1.0.0.0",
+   "parameters": {
+      "servicePlanName": {
+         "defaultValue": "function-plan",
+         "type": "string"
+      },
+      "functionAppName": {
+         "defaultValue": "function-demo",
+         "type": "string"
+      },
+      "sourceRepo": {
+         "defaultValue": "https://github.com/benc-uk/azure-functions.git",
+         "type": "string"
+      },
+      "sourceBranch": {
+         "defaultValue": "master",
+         "type": "string"
+      }
+   },
+   "variables": {
+      "storageAcctName": "[concat('functstor', uniquestring(resourceGroup().id))]"
+   },
+   "resources": [
+      {
+         "type": "Microsoft.Storage/storageAccounts",
+         "sku": {
+            "name": "Standard_LRS",
+            "tier": "Standard"
+         },
+         "kind": "Storage",
+         "name": "[variables('storageAcctName')]",
+         "apiVersion": "2016-01-01",
+         "location": "westeurope"
+      },
+      {
+         "type": "Microsoft.Web/serverfarms",
+         "sku": {
+            "name": "S1",
+            "capacity": 1
+         },
+         "kind": "app",
+         "name": "[parameters('servicePlanName')]",
+         "apiVersion": "2015-08-01",
+         "location": "[resourceGroup().location]",
+         "properties": {
+            "name": "[parameters('servicePlanName')]",
+            "numberOfWorkers": 1
+         }
+      },
+      {
+         "type": "Microsoft.Web/sites",
+         "kind": "functionapp",
+         "name": "[parameters('functionAppName')]",
+         "apiVersion": "2015-08-01",
+         "location": "[resourceGroup().location]",
+         "properties": {
+            "name": "[parameters('functionAppName')]",
+            "siteConfig": {
+               "appSettings": [
+                  {
+                     "name": "AzureWebJobsDashboard",
+                     "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAcctName'), ';AccountKey=', listKeys(variables('storageAcctName'),'2015-05-01-preview').key1)]"
+                  },
+                  {
+                     "name": "AzureWebJobsStorage",
+                     "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAcctName'), ';AccountKey=', listKeys(variables('storageAcctName'),'2015-05-01-preview').key1)]"
+                  },
+                  {
+                     "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                     "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAcctName'), ';AccountKey=', listKeys(variables('storageAcctName'),'2015-05-01-preview').key1)]"
+                  },
+                  {
+                     "name": "WEBSITE_CONTENTSHARE",
+                     "value": "[toLower(parameters('functionAppName'))]"
+                  },
+                  {
+                     "name": "FUNCTIONS_EXTENSION_VERSION",
+                     "value": "~1"
+                  }
+               ]
+            },
+            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('servicePlanName'))]"
+         },
+         "resources": [
+            {
+               "apiVersion": "2015-08-01",
+               "name": "web",
+               "type": "sourcecontrols",
+               "dependsOn": [
+                  "[resourceId('Microsoft.Web/Sites', parameters('functionAppName'))]"
+               ],
+               "properties": {
+                  "RepoUrl": "[parameters('sourceRepo')]",
+                  "branch": "[parameters('sourceBranch')]",
+                  "IsManualIntegration": true
+               }
+            }
+         ],
+         "dependsOn": [
+            "[resourceId('Microsoft.Web/serverfarms', parameters('servicePlanName'))]"
+         ]
+      }
+   ]
+}

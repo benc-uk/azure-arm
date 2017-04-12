@@ -1,0 +1,162 @@
+{
+   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+   "contentVersion": "1.0.0.0",
+   "parameters": {
+      "webSiteName": {
+         "type": "string",
+         "minLength": 1,
+         "metadata": {
+            "description": "Name of the Azure Web app to create"
+         }
+      },
+      "appSizingTier": {
+         "type": "string",
+         "defaultValue": "B1",
+         "allowedValues": [
+            "B1",
+            "B2",
+            "B3",
+            "S1",
+            "S2",
+            "S3"
+         ],
+         "metadata": {
+            "description": "Describes plan's pricing tier and instance size. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
+         }
+      },
+      "appInstanceCount": {
+         "type": "int",
+         "defaultValue": 1,
+         "minValue": 1,
+         "maxValue": 5,
+         "metadata": {
+            "description": "Number of app service instances to create"
+         }
+      },
+      "dbName": {
+         "type": "string",
+         "defaultValue": "app-db",
+         "metadata": {
+            "description": "Name of the SQL database"
+         }
+      },
+      "dbAdminUser": {
+         "type": "string",
+         "defaultValue": "dbadmin",
+         "metadata": {
+            "description": "Username of the SQL database admin user"
+         }
+      },
+      "dbAdminPassword": {
+         "type": "string",
+         "metadata": {
+            "description": "Password of the SQL database admin user"
+         }
+      },
+      "dbSizingTier": {
+         "type": "string",
+         "defaultValue": "S0",
+         "allowedValues": [
+            "S0",
+            "S1",
+            "S2",
+            "S3"
+         ],
+         "metadata": {
+            "description": "Describes DB size in DTUs. Check details at https://docs.microsoft.com/en-gb/azure/sql-database/sql-database-scale-up"
+         }
+      }
+   },
+   "variables": {
+      "hostingPlanName": "app-service-plan",
+      "sqlServerName": "[concat('app-sqlsrv-', uniquestring(resourceGroup().id))]"
+   },
+   "resources": [
+      {
+         "type": "Microsoft.Web/serverfarms",
+         "apiVersion": "2015-08-01",
+         "name": "[variables('hostingPlanName')]",
+         "location": "[resourceGroup().location]",
+         "sku": {
+            "name": "[parameters('appSizingTier')]",
+            "capacity": "[parameters('appInstanceCount')]"
+         }
+      },
+      {
+         "type": "Microsoft.Web/sites",
+         "apiVersion": "2015-08-01",
+         "name": "[parameters('webSiteName')]",
+         "location": "[resourceGroup().location]",
+         "dependsOn": [
+            "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
+         ],
+         "properties": {
+            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
+         }
+      },
+      {
+         "type": "Microsoft.Sql/servers",
+         "kind": "v12.0",
+         "name": "[variables('sqlServerName')]",
+         "apiVersion": "2014-04-01-preview",
+         "location": "[resourceGroup().location]",
+         "properties": {
+            "administratorLogin": "[parameters('dbAdminUser')]",
+            "administratorLoginPassword": "[parameters('dbAdminPassword')]",
+            "version": "12.0"
+         },
+         "resources": [],
+         "dependsOn": []
+      },
+      {
+         "type": "Microsoft.Sql/servers/firewallrules",
+         "kind": "v12.0",
+         "name": "[concat(variables('sqlServerName'), '/AllowAllWindowsAzureIps')]",
+         "apiVersion": "2014-04-01-preview",
+         "location": "[resourceGroup().location]",
+         "properties": {
+            "startIpAddress": "0.0.0.0",
+            "endIpAddress": "0.0.0.0"
+         },
+         "resources": [],
+         "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
+         ]
+      },
+      {
+         "type": "Microsoft.Sql/servers/databases",
+         "kind": "v12.0,user",
+         "name": "[concat(variables('sqlServerName'), '/', parameters('dbName'))]",
+         "apiVersion": "2014-04-01-preview",
+         "location": "[resourceGroup().location]",
+         "properties": {
+            "edition": "Standard",
+            "collation": "SQL_Latin1_General_CP1_CI_AS",
+            "requestedServiceObjectiveName": "[parameters('dbSizingTier')]",
+            "defaultSecondaryLocation": "North Europe"
+         },
+         "resources": [],
+         "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
+         ]
+      }
+   ],
+   "outputs": {
+      "siteUrl": {
+         "type": "string",
+         "value": "[reference(parameters('webSiteName')).hostNames[0]]"
+      },
+      "sqlServerFQDN": {
+         "type": "string",
+         "value": "[reference(variables('sqlServerName')).fullyQualifiedDomainName]"
+      },
+      "sqlServerUser": {
+         "type": "string",
+         "value": "[reference(variables('sqlServerName')).administratorLogin]"
+      },
+      "sqlServerPassword": {
+         "type": "string",
+         "value": "[reference(variables('sqlServerName')).administratorLoginPassword]"
+      }
+   }
+}

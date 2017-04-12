@@ -1,0 +1,126 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "siteName": {
+            "defaultValue": "demowebapp",
+            "type": "String"
+        },
+        "registryName": {
+            "defaultValue": "demoregistry",
+            "type": "String"
+        },
+        "dockerImageName": {
+            "defaultValue": "myapp",
+            "type": "String"
+        },
+        "dockerImagePort": {
+            "defaultValue": "3000",
+            "type": "String"
+        }                 
+    },
+    "variables": {
+        "servicePlanName": "linux-service-plan",
+        "storageAcctName": "[concat('acrstor', uniquestring(resourceGroup().id))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "sku": {
+                "name": "B1",
+                "capacity": 1
+            },
+            "properties": {
+                "reserved": true
+            },
+            "kind": "linux",
+            "name": "[variables('servicePlanName')]",
+            "apiVersion": "2015-08-01",
+            "location": "westeurope"
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "kind": "app",
+            "name": "[parameters('siteName')]",
+            "apiVersion": "2015-08-01",
+            "location": "westeurope",
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('servicePlanName'))]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "PORT",
+                            "value": "[parameters('dockerImagePort')]"
+                        },
+                        {
+                            "name": "DOCKER_CUSTOM_IMAGE_NAME",
+                            "value": "[concat(parameters('registryName'), '.azurecr.io/', parameters('dockerImageName'))]"
+                        },
+                        {
+                            "name": "DOCKER_REGISTRY_SERVER_URL",
+                            "value": "[concat('https://', parameters('registryName'), '.azurecr.io')]"
+                        },
+                        {
+                            "name": "DOCKER_REGISTRY_SERVER_USERNAME",
+                            "value": "[parameters('registryName')]"
+                        },
+                        {
+                            "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+                            "value": "[listCredentials(resourceId('Microsoft.ContainerRegistry/registries', parameters('registryName')), '2017-03-01').passwords[0].value]"
+                        }
+                    ]
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('servicePlanName'))]",
+                "[resourceId('Microsoft.ContainerRegistry/registries', parameters('registryName'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[variables('storageAcctName')]",
+            "apiVersion": "2016-01-01",
+            "location": "[resourceGroup().location]"
+        },
+        {
+            "name": "[parameters('registryName')]",
+            "type": "Microsoft.ContainerRegistry/registries",
+            "apiVersion": "2017-03-01",
+            "tags": {},
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "Basic"
+            },
+            "properties": {
+                "adminUserEnabled": true,
+                "storageAccount": {
+                    "name": "[variables('storageAcctName')]",
+                    "accessKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAcctName')), '2016-01-01').keys[0].value]"
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "registryName": {
+            "type": "string",
+            "value": "[parameters('registryName')]"
+        },
+        "registryUrl": {
+            "type": "string",
+            "value": "[concat('https://', parameters('registryName'), '.azurecr.io')]"
+        },
+        "registryUsername": {
+            "type": "string",
+            "value": "[parameters('registryName')]"
+        },                
+        "registryPassword": {
+            "type": "string",
+            "value": "[listCredentials(resourceId('Microsoft.ContainerRegistry/registries', parameters('registryName')), '2017-03-01').passwords[0].value]"
+        }
+    }
+}

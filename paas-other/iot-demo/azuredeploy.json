@@ -1,0 +1,240 @@
+{
+   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+   "contentVersion": "1.0.0.0",
+   "parameters": {
+      "serviceBusName": {
+         "type": "string",
+         "defaultValue": "sb-demo"
+      },
+      "iotHubName": {
+         "type": "string",
+         "defaultValue": "iot-demo"
+      },
+      "functionAppName": {
+         "type": "string",
+         "defaultValue": "function-demo"
+      }
+   },
+   "variables": {
+      "storageAcctName": "[concat('functstor', uniquestring(resourceGroup().id))]",
+      "gitRepo": "https://github.com/benc-uk/azure-iot-demo.git",
+      "gitBranch": "function",
+      "queueName": "demo-queue",
+      "functionAppPlanName": "app-service-plan"
+   },
+   "resources": [
+      {
+         "type": "Microsoft.Devices/IotHubs",
+         "sku": {
+            "name": "S1",
+            "tier": "Standard",
+            "capacity": 1
+         },
+         "name": "[parameters('iotHubName')]",
+         "apiVersion": "2016-02-03",
+         "location": "[resourceGroup().location]",
+         "properties": {
+            "ipFilterRules": [],
+            "eventHubEndpoints": {
+               "events": {
+                  "retentionTimeInDays": 1,
+                  "partitionCount": 2
+               }
+            },
+            "routing": {
+               "endpoints": {
+                  "serviceBusQueues": [
+                     {
+                        "connectionString": "[concat('Endpoint=sb://', parameters('serviceBusName'), '.servicebus.windows.net:5671/;SharedAccessKeyName=sender-key;SharedAccessKey=', listKeys('sender-key', '2015-08-01').primaryKey, ';EntityPath=', variables('queueName'))]",
+                        "name": "service-bus-demo-endpoint"
+                     }
+                  ],
+                  "serviceBusTopics": [],
+                  "eventHubs": []
+               },
+               "routes": [
+                  {
+                     "name": "all-messages",
+                     "source": "DeviceMessages",
+                     "condition": "true",
+                     "endpointNames": [
+                        "service-bus-demo-endpoint"
+                     ],
+                     "isEnabled": true
+                  }
+               ],
+               "fallbackRoute": {
+                  "name": "$fallback",
+                  "source": "DeviceMessages",
+                  "condition": "true",
+                  "endpointNames": [
+                     "events"
+                  ],
+                  "isEnabled": true
+               }
+            }
+         },
+         "dependsOn": [
+            "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBusName'))]"
+         ]
+      },
+      {
+         "apiVersion": "2015-08-01",
+         "name": "[parameters('serviceBusName')]",
+         "type": "Microsoft.ServiceBus/namespaces",
+         "location": "[resourceGroup().location]",
+         "kind": "Messaging",
+         "sku": {
+            "name": "Standard",
+            "tier": "Standard"
+         },
+         "resources": [
+            {
+               "apiVersion": "2015-08-01",
+               "name": "[variables('queueName')]",
+               "type": "Queues",
+               "dependsOn": [
+                  "[concat('Microsoft.ServiceBus/namespaces/', parameters('serviceBusName'))]"
+               ],
+               "properties": {
+                  "path": "[variables('queueName')]"
+               },
+               "resources": [
+                  {
+                     "apiVersion": "2015-08-01",
+                     "name": "sender-key",
+                     "type": "authorizationRules",
+                     "dependsOn": [
+                        "[variables('queueName')]"
+                     ],
+                     "properties": {
+                        "rights": [
+                           "Send"
+                        ]
+                     }
+                  },
+                  {
+                     "apiVersion": "2015-08-01",
+                     "name": "listen-key",
+                     "type": "authorizationRules",
+                     "dependsOn": [
+                        "[variables('queueName')]"
+                     ],
+                     "properties": {
+                        "rights": [
+                           "Listen"
+                        ]
+                     }
+                  }
+               ]
+            }
+         ]
+      },
+      {
+         "type": "Microsoft.Storage/storageAccounts",
+         "sku": {
+            "name": "Standard_LRS",
+            "tier": "Standard"
+         },
+         "kind": "Storage",
+         "name": "[variables('storageAcctName')]",
+         "apiVersion": "2016-01-01",
+         "location": "westeurope"
+      },
+      {
+         "type": "Microsoft.Web/serverfarms",
+         "sku": {
+            "name": "S1",
+            "capacity": 1
+         },
+         "kind": "app",
+         "name": "[variables('functionAppPlanName')]",
+         "apiVersion": "2015-08-01",
+         "location": "[resourceGroup().location]",
+         "properties": {
+            "name": "[variables('functionAppPlanName')]",
+            "numberOfWorkers": 1
+         }
+      },
+      {
+         "type": "Microsoft.Web/sites",
+         "kind": "functionapp",
+         "name": "[parameters('functionAppName')]",
+         "apiVersion": "2015-08-01",
+         "location": "[resourceGroup().location]",
+         "properties": {
+            "name": "[parameters('functionAppName')]",
+            "siteConfig": {
+               "appSettings": [
+                  {
+                     "name": "AzureWebJobsDashboard",
+                     "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAcctName'), ';AccountKey=', listKeys(variables('storageAcctName'),'2015-05-01-preview').key1)]"
+                  },
+                  {
+                     "name": "AzureWebJobsStorage",
+                     "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAcctName'), ';AccountKey=', listKeys(variables('storageAcctName'),'2015-05-01-preview').key1)]"
+                  },
+                  {
+                     "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                     "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAcctName'), ';AccountKey=', listKeys(variables('storageAcctName'),'2015-05-01-preview').key1)]"
+                  },
+                  {
+                     "name": "WEBSITE_CONTENTSHARE",
+                     "value": "[toLower(parameters('functionAppName'))]"
+                  },
+                  {
+                     "name": "FUNCTIONS_EXTENSION_VERSION",
+                     "value": "~1"
+                  },
+                  {
+                     "name": "iotdemo-connection",
+                     "value": "[concat('Endpoint=sb://', parameters('serviceBusName'), '.servicebus.windows.net/;SharedAccessKeyName=listen-key;SharedAccessKey=', listKeys('listen-key', '2015-08-01').primaryKey)]"
+                  }
+               ]
+            },
+            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('functionAppPlanName'))]"
+         },
+         "resources": [
+            {
+               "apiVersion": "2015-08-01",
+               "name": "web",
+               "type": "sourcecontrols",
+               "dependsOn": [
+                  "[resourceId('Microsoft.Web/Sites', parameters('functionAppName'))]"
+               ],
+               "properties": {
+                  "RepoUrl": "[variables('gitRepo')]",
+                  "branch": "[variables('gitBranch')]",
+                  "IsManualIntegration": true
+               }
+            }
+         ],
+         "dependsOn": [
+            "[resourceId('Microsoft.Web/serverfarms', variables('functionAppPlanName'))]",
+            "[resourceId('Microsoft.ServiceBus/namespaces', parameters('serviceBusName'))]"
+         ]
+      }
+   ],
+   "outputs": {
+      "iotHubHostname": {
+         "type": "string",
+         "value": "[concat(parameters('iotHubName'), '.azure-devices.net')]"
+      },
+      "iotHubAccessKey": {
+         "type": "string",
+         "value": "[listkeys(resourceId('Microsoft.Devices/IotHubs/IotHubKeys', parameters('iotHubName'), 'iothubowner'), '2016-02-03').primaryKey]"
+      },
+      "iotHubConnStr": {
+         "type": "string",
+         "value": "[concat('HostName=',parameters('iotHubName'),'.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=',listkeys(resourceId('Microsoft.Devices/IotHubs/IotHubKeys', parameters('iotHubName'), 'iothubowner'), '2016-02-03').primaryKey)]"
+      },
+      "storageAccountName": {
+         "type": "string",
+         "value": "[variables('storageAcctName')]"
+      },
+      "storageAccountKey": {
+         "type": "string",
+         "value": "[listKeys(variables('storageAcctName'),'2015-05-01-preview').key1]"
+      }
+   }
+}

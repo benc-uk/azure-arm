@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "siteName": {
+            "value": "demowebapp5213"
+        },
+        "registryName": {
+            "value": "nodedemo"
+        },
+        "registryPassword": {
+            "value": "Y+=h/+Rr/=Ssdju=7=YysCrfaA/Mv7h="
+        },
+        "dockerImageName": {
+            "value": "myapp"
+        },
+        "dockerImagePort": {
+            "value": "3000"
+        },
+        "sitePlanSize": {
+            "value": "B1"
+        }
+    }
+}

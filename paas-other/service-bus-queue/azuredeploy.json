@@ -1,0 +1,83 @@
+{
+   "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+   "contentVersion": "1.0.0.0",
+   "parameters": {
+      "serviceBusPrefix": {
+         "type": "string",
+         "defaultValue": "demobus"
+      },
+      "queueName": {
+         "type": "string",
+         "defaultValue": "demo-queue"
+      }
+   },
+   "variables": {
+      "senderKeyName": "sender-key",
+      "listenerKeyName": "listen-key",
+      "serviceBusName": "[concat(parameters('serviceBusPrefix'), uniquestring(resourceGroup().id))]"
+   },
+   "resources": [
+      {
+         "apiVersion": "2015-08-01",
+         "name": "[variables('serviceBusName')]",
+         "type": "Microsoft.ServiceBus/namespaces",
+         "location": "[resourceGroup().location]",
+         "kind": "Messaging",
+         "sku": {
+            "name": "Standard",
+            "tier": "Standard"
+         },
+         "resources": [
+            {
+               "apiVersion": "2015-08-01",
+               "name": "[parameters('queueName')]",
+               "type": "queues",
+               "dependsOn": [
+                  "[resourceId('Microsoft.ServiceBus/namespaces/', variables('serviceBusName'))]"
+               ],
+               "properties": {
+                  "path": "[parameters('queueName')]"
+               },
+               "resources": [
+                  {
+                     "apiVersion": "2015-08-01",
+                     "name": "[variables('senderKeyName')]",
+                     "type": "authorizationRules",
+                     "dependsOn": [
+                        "[parameters('queueName')]"
+                     ],
+                     "properties": {
+                        "rights": [
+                           "Send"
+                        ]
+                     }
+                  },
+                  {
+                     "apiVersion": "2015-08-01",
+                     "name": "[variables('listenerKeyName')]",
+                     "type": "authorizationRules",
+                     "dependsOn": [
+                        "[parameters('queueName')]"
+                     ],
+                     "properties": {
+                        "rights": [
+                           "Listen"
+                        ]
+                     }
+                  }
+               ]
+            }
+         ]
+      }
+   ],
+   "outputs": {
+      "SenderKey": {
+         "type": "object",
+         "value": "[listKeys(variables('senderKeyName'), '2015-08-01')]"
+      },
+      "ListenerKey": {
+         "type": "object",
+         "value": "[listKeys(variables('listenerKeyName'), '2015-08-01')]"
+      }
+   }
+}
