@@ -17,7 +17,7 @@
         },
         "registryPassword": {
             "defaultValue": "supersecret",
-            "type": "string"
+            "type": "securestring"
         },        
         "dockerImageName": {
             "defaultValue": "myapp",

@@ -4,19 +4,19 @@
     "parameters": {
         "siteName": {
             "defaultValue": "demowebapp",
-            "type": "String"
+            "type": "string"
         },
         "registryName": {
             "defaultValue": "demoregistry",
-            "type": "String"
+            "type": "string"
         },
         "dockerImageName": {
             "defaultValue": "myapp",
-            "type": "String"
+            "type": "string"
         },
         "dockerImagePort": {
             "defaultValue": "3000",
-            "type": "String"
+            "type": "string"
         }                 
     },
     "variables": {

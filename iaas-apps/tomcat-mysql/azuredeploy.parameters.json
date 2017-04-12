@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "vmSize":          {"value": "Standard_A1_v2"},
-        "username":         {"value": "adminuser"},
+        "username":        {"value": "adminuser"},
         "sshKey":          {"value": "ssh-rsa 1234567890SUPERSECRET0987654321 rsa-key-20160706"}
     }
 }
