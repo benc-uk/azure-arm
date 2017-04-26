@@ -4,11 +4,13 @@
    "parameters": {
       "serviceBusPrefix": {
          "type": "string",
-         "defaultValue": "demobus"
+         "defaultValue": "demobus",
+         "metadata": {"description": "Name of the Service Bus namespace, unique string will be appended"}
       },
       "queueName": {
          "type": "string",
-         "defaultValue": "demo-queue"
+         "defaultValue": "demo-queue",
+         "metadata": {"description": "Service Bus queue name"}
       }
    },
    "variables": {

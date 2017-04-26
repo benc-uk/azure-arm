@@ -4,15 +4,18 @@
    "parameters": {
       "serviceBusName": {
          "type": "string",
-         "defaultValue": "sb-demo"
+         "defaultValue": "sb-demo",
+         "metadata": {"description": "Name of the Service Bus namespace, must be globally unique"}
       },
       "iotHubName": {
          "type": "string",
-         "defaultValue": "iot-demo"
+         "defaultValue": "iot-demo",
+         "metadata": {"description": "Name of the IoT Hub, must be globally unique"}
       },
       "functionAppName": {
          "type": "string",
-         "defaultValue": "function-demo"
+         "defaultValue": "function-demo",
+         "metadata": {"description": "Name of the Function App, must be globally unique"}
       }
    },
    "variables": {

@@ -11,7 +11,7 @@
 
 # Change as required!
 param(
-    [string]$subname    = "Microsoft Azure Internal Consumption",
+    [string]$subname     = "Microsoft Azure Internal Consumption",
     [string]$res_grp, 
     [string]$loc         = "westeurope",
     [string]$template, 
@@ -27,22 +27,28 @@ try {
     Login-AzureRmAccount -ErrorAction Stop
     Save-AzureRmProfile -Path "$env:userprofile\.azureprof.json"
 }
+
 # Select which Azure subscription
 Select-AzureRmSubscription -SubscriptionName $subname -ErrorAction Stop
 
 # Create the resource goup
 New-AzureRmResourceGroup -Name $res_grp -Location $loc -Force
 
-if($pub_key) {
-    $pub_key_data = Get-Content -Path $pub_key
-}
-
 $timestamp = ((Get-Date).ToUniversalTime()).ToString('yyyy-MM-dd_HH.mm')
 
 # Start the deployment, give the deployment a name with date/time stamp
 # Change mode as required, default & safe is 'Incremental'
-New-AzureRmResourceGroupDeployment -ResourceGroupName $res_grp `
+if($pub_key) {
+    $pub_key_data = Get-Content -Path $pub_key
+    New-AzureRmResourceGroupDeployment -ResourceGroupName $res_grp `
                                    -Name "deployment_$($timestamp)" `
                                    -TemplateFile $template `
                                    -TemplateParameterFile $param_file `
-                                   -Mode Incremental -Verbose #-sshKey $pub_key_data
+                                   -Mode Incremental -Verbose -sshKey $pub_key_data
+} else {
+    New-AzureRmResourceGroupDeployment -ResourceGroupName $res_grp `
+                                   -Name "deployment_$($timestamp)" `
+                                   -TemplateFile $template `
+                                   -TemplateParameterFile $param_file `
+                                   -Mode Incremental -Verbose                                  
+}
