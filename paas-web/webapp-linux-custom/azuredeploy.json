@@ -44,14 +44,14 @@
             "kind": "linux",
             "name": "[variables('servicePlanName')]",
             "apiVersion": "2015-08-01",
-            "location": "uswest"
+            "location": "westus"
         },
         {
             "type": "Microsoft.Web/sites",
             "kind": "app",
             "name": "[parameters('siteName')]",
             "apiVersion": "2015-08-01",
-            "location": "uswest",
+            "location": "westus",
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('servicePlanName'))]",
                 "siteConfig": {
