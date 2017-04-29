@@ -30,7 +30,7 @@
     },
     "variables": {
         "servicePlanName": "linux-service-plan",
-        "location": "West US",        
+        "location": "West US"
     },
     "resources": [
         {
