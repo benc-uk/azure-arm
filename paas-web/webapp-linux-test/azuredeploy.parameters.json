@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "siteName": {
-            "value": "demowebapp5213"
+            "value": "bcsitetestfoo"
         },
         "registryName": {
-            "value": "nodedemo"
+            "value": "bcreg"
         },
         "registryPassword": {
-            "value": "changeme"
+            "value": "/0ZV2C/4YAuVfAnhMZRLPtPE=2qwmXQ8"
         },
         "dockerImageName": {
             "value": "myapp"
