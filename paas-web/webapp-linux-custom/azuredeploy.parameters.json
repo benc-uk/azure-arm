@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "siteName": {
-            "value": "demowebapp5213"
+            "value": "demowebapp"
         },
         "registryName": {
             "value": "nodedemo"
