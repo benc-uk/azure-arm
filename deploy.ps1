@@ -3,7 +3,7 @@
     Standard ARM deployment from given template
 .DESCRIPTION
     Deploy an ARM template to Azure in given location & subscription
-    Additional input parameter file is required
+    Additional input parameter file is expected
 .NOTES
     Author:   Ben Coleman
     Date/Ver: Feb 2017, v2

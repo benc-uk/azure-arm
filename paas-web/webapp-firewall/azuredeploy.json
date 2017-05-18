@@ -1,0 +1,64 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "siteName": {
+      "defaultValue": "demowebapp",
+      "type": "string"
+    },
+    "allowedIpAddress": {
+      "defaultValue": "10.20.30.40",
+      "type": "string"
+    },
+    "allowedIpMask": {
+      "defaultValue": "255.255.255.255",
+      "type": "string"
+    }
+  },
+  "variables": {
+    "appPlanName": "service-plan"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2015-08-01",
+      "name": "[variables('appPlanName')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "B1",
+        "capacity": 1
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2015-08-01",
+      "name": "[parameters('siteName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('appPlanName'))]"
+      ],
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appPlanName'))]"
+      },
+      "resources": [
+        {
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "name": "web",
+          "properties": {
+            "ipSecurityRestrictions": [
+              {
+                "ipAddress": "[parameters('allowedIpAddress')]",
+                "subnetMask": "[parameters('allowedIpMask')]"
+              }
+            ]
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', parameters('siteName'))]"
+          ]
+        }
+      ]
+    }
+  ],
+  "outputs": {}
+}

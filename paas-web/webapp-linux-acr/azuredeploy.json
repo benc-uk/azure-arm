@@ -36,14 +36,14 @@
             "kind": "linux",
             "name": "[variables('servicePlanName')]",
             "apiVersion": "2015-08-01",
-            "location": "westeurope"
+            "location": "[resourceGroup().location]"
         },
         {
             "type": "Microsoft.Web/sites",
             "kind": "app",
             "name": "[parameters('siteName')]",
             "apiVersion": "2015-08-01",
-            "location": "westeurope",
+            "location": "[resourceGroup().location]",
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('servicePlanName'))]",
                 "siteConfig": {
