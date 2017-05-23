@@ -29,7 +29,7 @@ Parameters:
 }
 
 # Param handling stuff
-OPTS=`getopt -o f:g:h --long file:,group:,help -n 'parse-options' -- "$@"`
+OPTS=`getopt -o f:g:p:l:s:h --long file:,group:,location:,subscription:,parameters:,help -n 'parse-options' -- "$@"`
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; usage; exit 1 ; fi
 eval set -- "$OPTS"
 
@@ -55,6 +55,7 @@ fi
 # We need the file param at a minimum
 if [ -z ${FILE} ]; then
   usage
+  exit 1
 fi
 # Make up a res group name if it's not supplied, Temp.GroupXXXXX where X is random number
 if [ -z ${GROUP} ]; then
