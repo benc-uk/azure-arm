@@ -3,7 +3,7 @@
    "contentVersion": "1.0.0.0",
    "parameters": {
       "webSiteName": {
-         "value": "demositebc4"
+         "value": "demositebc5"
       },
       "appSizingTier": {
          "value": "B3"

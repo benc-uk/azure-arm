@@ -70,6 +70,7 @@
    "variables": {
       "hostingPlanName": "app-service-plan",
       "sqlServerName": "[concat('app-sqlsrv-', uniquestring(resourceGroup().id))]"
+      "connectionStringName": "appDbConnString"
    },
    "resources": [
       {
@@ -88,10 +89,20 @@
          "name": "[parameters('webSiteName')]",
          "location": "[resourceGroup().location]",
          "dependsOn": [
-            "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
+            "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
+            "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
          ],
          "properties": {
-            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
+            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+            "siteConfig": {
+               "connectionStrings": [
+                  {
+                     "name": "[variables('connectionStringName')]",
+                     "connectionString": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('dbName'), ';User Id=', parameters('dbAdminUser'), '@', variables('sqlServerName'), ';Password=', parameters('dbAdminPassword'), ';')]",
+                     "type": 2
+                  }
+               ]
+            }
          }
       },
       {
