@@ -1,4 +1,4 @@
-# Webapp Linux ACR
+# Webapp Linux & Container Registry
 Create a Linux Web App to run a *custom* Docker image stored in Azure Container Registry
 
 ### Deployed Resources

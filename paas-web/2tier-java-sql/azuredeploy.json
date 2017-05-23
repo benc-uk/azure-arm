@@ -33,6 +33,18 @@
             "description": "Number of app service instances to create"
          }
       },
+      "tomcatVersion": {
+         "type": "string",
+         "defaultValue": "8.0",
+         "allowedValues": [
+            "7.0",
+            "8.0",
+            "8.5"
+         ],
+         "metadata": {
+            "description": "Version of Tomcat to deploy and use"
+         }
+      },
       "dbName": {
          "type": "string",
          "defaultValue": "app-db",
@@ -69,8 +81,10 @@
    },
    "variables": {
       "hostingPlanName": "app-service-plan",
-      "sqlServerName": "[concat('app-sqlsrv-', uniquestring(resourceGroup().id))]"
-      "connectionStringName": "appDbConnString"
+      "sqlServerName": "[concat('app-sqlsrv-', uniquestring(resourceGroup().id))]",
+      "connectionStringName": "appDbConnString",
+      "javaVersion": "1.8",
+      "javaContainer": "TOMCAT"
    },
    "resources": [
       {
@@ -95,6 +109,9 @@
          "properties": {
             "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
             "siteConfig": {
+               "javaVersion": "[variables('javaVersion')]",
+               "javaContainer": "[variables('javaContainer')]",
+               "javaContainerVersion": "[parameters('tomcatVersion')]",
                "connectionStrings": [
                   {
                      "name": "[variables('connectionStringName')]",
