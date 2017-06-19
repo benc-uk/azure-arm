@@ -1,0 +1,203 @@
+{
+   
+	"ARM File: Skeleton template": {
+		"prefix": "arm-file-template",
+		"body": [
+			"{",
+			"  \"$$schema\": \"http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",",
+			"  \"contentVersion\": \"1.0.0.0\",",
+			"  \"parameters\": { ${3} },",
+			"  \"variables\": { ${2} },",
+			"  \"resources\": [ ${1} ],",
+			"  \"outputs\": {  }",
+			"}"
+		],
+		"description": "ARM template file skeleton"
+	},
+	"ARM File: Skeleton parameters": {
+		"prefix": "arm-file-parameters",
+		"body": [
+			"{",
+			"  \"$$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#\",",
+			"  \"contentVersion\": \"1.0.0.0\",",
+			"  \"parameters\": {",
+			"    \"${1:param-name}\": {\"value\": \"${2:param-value}\"}",
+			"  }",
+			"}"
+		],
+		"description": "ARM parameters file skeleton"
+	},
+	"ARM Parameter": {
+		"prefix": "arm-param",
+		"body": [
+			"\"${1:<name>}\": {",
+			"  \"defaultValue\": \"${2:<default-value>}\",",
+			"  \"type\": \"${3:<type>}\"",
+    		"}"
+		],
+		"description": "ARM template parameter"
+	},
+	"ARM Parameter with Description": {
+		"prefix": "arm-param-description",
+		"body": [
+			"\"${1:<name>}\": {",
+			"  \"defaultValue\": \"${2:<default-value>}\",",
+			"  \"type\": \"${3:<type>}\",",
+			"  \"metadata\": {",
+			"    \"description\": \"${3:<description>}\"",
+			"  }",
+			"}"
+		],
+		"description": "ARM template parameter with description"
+	},	
+	"ARM Variable": {
+		"prefix": "arm-variable",
+		"body": [
+			"\"${1:<name>}\": \"${2:<value>}\""
+		],
+		"description": "ARM template variable"		
+	},
+	"ARM Output": {
+		"prefix": "arm-output",
+		"body": [
+			"\"${1:<name>}\": {",
+			"  \"value\": \"${2:<value>}\",",
+			"  \"type\": \"${3:<type>}\"",
+    		"}"
+		],
+		"description": "ARM template parameter"
+	},	
+	"Resource: Storage Account": {
+		"prefix": "arm-storage",
+		"body": [
+			"{",
+			"  \"type\": \"Microsoft.Storage/storageAccounts\",",
+			"  \"sku\": {",
+			"    \"name\": \"${3:Standard_LRS}\",",
+			"    \"tier\": \"Standard\"",
+			"  },",
+			"  \"kind\": \"Storage\",",
+			"  \"name\": \"${1:<name>}\",",
+			"  \"apiVersion\": \"2016-01-01\",",
+			"  \"location\": \"${2:<location>}\"",
+			"}"
+		],
+		"description": "Azure Storage Account"
+	},
+	"Resource: Public IP": {
+		"prefix": "arm-ip",
+		"body": [
+			"{",
+			"  \"type\": \"Microsoft.Network/publicIPAddresses\",",
+			"  \"name\": \"${1:<name>}\",",
+			"  \"properties\": {",
+			"    \"publicIPAllocationMethod\": \"${3:Static}\"",
+			"  },",
+			"  \"apiVersion\": \"2016-09-01\",",
+			"  \"location\": \"${2:<location>}\"",
+			"}"
+		],
+		"description": "Azure Storage Account"
+	},
+	"Resource: VNET": {
+		"prefix": "arm-vnet",
+		"body": [
+			"{",
+			"  \"apiVersion\": \"2016-03-30\",",
+			"  \"type\": \"Microsoft.Network/virtualNetworks\",",
+			"  \"name\": \"${1:<name>}\",",
+			"  \"location\": \"${2:<location>}\",",
+			"  \"properties\": {",
+			"    \"addressSpace\": {",
+			"    \"addressPrefixes\": [ \"${3:<address-space>}\" ]",
+			"  },",
+			"  \"subnets\": [",
+			"    {",
+			"      \"name\": \"${4:<subnet-name>}\",",
+			"      \"properties\": {",
+			"        \"addressPrefix\": \"${5:subnet}\"",
+			"        }",
+			"      }",
+			"    ]",
+			"  }",
+			"}"
+		],
+		"description": "Azure Virtual Network"
+	},
+	"Resource: NSG": {
+		"prefix": "arm-nsg",
+		"body": [
+			"{",
+			"  \"apiVersion\": \"2016-03-30\",",
+			"  \"name\": \"${1:<name>}\",",
+			"  \"type\": \"Microsoft.Network/networkSecurityGroups\",",
+			"  \"location\": \"${2:<location>}\",   ",
+			"  \"properties\": {",
+			"    \"securityRules\": [",
+			"      {",
+			"        \"name\": \"${3:<rule-name>}\",",
+			"        \"properties\": {",
+			"          \"protocol\": \"TCP\",",
+			"          \"sourcePortRange\": \"*\",",
+			"          \"destinationPortRange\": \"${4:<tcp-port>}\",",
+			"          \"sourceAddressPrefix\": \"*\",",
+			"          \"destinationAddressPrefix\": \"*\",",
+			"          \"access\": \"Allow\",",
+			"          \"priority\": 1000,",
+			"          \"direction\": \"Inbound\"",
+			"        }",
+			"      }",
+			"    ]",
+			"  }",
+			"}"
+		],
+		"description": "Azure Network Security Group"
+	},
+	"Resource: App Service Plan": {
+		"prefix": "arm-appservice",
+		"body": [
+			"{",
+			"    \"type\": \"Microsoft.Web/serverfarms\",",
+			"    \"apiVersion\": \"2015-08-01\",",
+			"    \"name\": \"${1:<name>}\",",
+			"    \"location\": \"${2:<location>}\",",
+			"    \"sku\": {",
+			"        \"name\": \"${3:<price-tier>}\",",
+			"        \"capacity\": ${4:1}",
+			"    }",
+			"}"
+		],
+		"description": "Azure App Service Plan"
+	},
+	"Resource: Web App": {
+		"prefix": "arm-webapp",
+		"body": [
+			"{",
+			"    \"type\": \"Microsoft.Web/sites\",",
+			"    \"apiVersion\": \"2015-08-01\",",
+			"    \"name\": \"${1:<name>}\",",
+			"    \"location\": \"${2:<location>}\",",
+			"    \"properties\": {",
+			"        \"serverFarmId\": \"[resourceId('Microsoft.Web/serverfarms', ${3:<app-plan-name>})]\"",
+			"    }",
+			"}"
+		],
+		"description": "Azure Web App"
+	},
+	"Resource: App Insights": {
+		"prefix": "arm-appinsights",
+		"body": [
+			"{",
+			"    \"type\": \"Microsoft.Insights/components\",",
+			"    \"apiVersion\": \"2015-05-01\",",
+			"    \"name\": \"${1:<name>}\",",
+			"    \"kind\": \"web\",",
+			"    \"location\": \"${2:<location>}\",",
+			"    \"properties\": {",
+			"        \"Application_Type\": \"web\"",
+			"    }",
+			"}"
+		],
+		"description": "Azure Application Insights"
+	}
+}
