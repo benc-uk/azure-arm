@@ -48,6 +48,4 @@ The file [**etc/vscode-arm-snippets.json**](etc/vscode-arm-snippets.json) contai
 - with-firewall
 
 ## Other Templates
-- empty
-
-[![Deploy to Azure](http//azuredeploy.net/deploybutton.png)](https//azuredeploy.net/)
+- [empty](empty/)
