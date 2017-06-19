@@ -1,7 +1,9 @@
 # ARM Template Collection
 
 This is my set of useful basic ARM templates, covering a range of standard simple scenarios. It is grouped by IaaS / PaaS and then use-cases under that.  
-There are some templates covering advanced or less well recorded ARM features
+There are some templates covering advanced or less well recorded ARM features.
+
+For ease of management templates are grouped as a single template per folder with the standard name *azuredeploy.json* and supporting parameter file *azuredeploy.parameters.json*
 
 ---
 
@@ -23,7 +25,7 @@ The file [**etc/vscode-arm-snippets.json**](etc/vscode-arm-snippets.json) contai
 - tomcat-mysql
 
 #### IaaS Containers
-- simple-container
+- [simple-container](iaas-containers/simple-container/)
 
 #### IaaS Linux VM
 - custom-img
@@ -40,12 +42,12 @@ The file [**etc/vscode-arm-snippets.json**](etc/vscode-arm-snippets.json) contai
 - service-bus-queue
 
 #### PaaS Web
-- 2tier-dotnet-sql
-- 2tier-java-sql
-- dotnet-deployapp
-- linux-acr-deploy
-- linux-acr-existing
-- with-firewall
+- [2tier-dotnet-sql](paas-web/2tier-dotnet-sql/)
+- [2tier-java-sql](paas-web/2tier-java-sql/)
+- [dotnet-deployapp](paas-web/dotnet-deployapp/)
+- [linux-acr-deploy](paas-web/linux-acr-deploy/)
+- [linux-acr-existing](paas-web/linux-acr-existing/)
+- [with-firewall](paas-web/with-firewall/)
 
 ## Other Templates
 - [empty](empty/)
