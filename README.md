@@ -5,14 +5,14 @@ There are some templates covering advanced or less well recorded ARM features
 
 ---
 
-# Supporting Files in [/etc](/etc)
+# Supporting Files
 - **deploy.ps1** - Standard-ish PowerShell script for deploying a template
 - **deploy.sh**  - Standard-ish bash script for deploying a template with the Azure CLI
-- **all-resources.sh** - List all resource providers and their resource types
-- **All Azure Resources.md** - Formatted output of **all-resources.sh**
+- **etc/all-resources.sh** - List all resource providers and their resource types
+- **etc/All Azure Resources.md** - Formatted output of **etc/all-resources.sh**
 
 ## ARM Snippets for VS Code
-The file [**vscode-arm-snippets.json**](etc/vscode-arm-snippets.json) contains ARM helper snippets for use with VSCode when editing & creating ARM JSON files. To install and use this, start VS Code and go to: File -> Preferences -> User Snippets. Then select JSON from the list and *json.json* will be opened for editing. Take the [raw version](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/vscode-arm-snippets.json) of the snippets and copy and paste them into *json.json*
+The file [**etc/vscode-arm-snippets.json**](etc/vscode-arm-snippets.json) contains ARM helper snippets for use with VSCode when editing & creating ARM JSON files. To install and use this, start VS Code and go to: File -> Preferences -> User Snippets. Then select JSON from the list and *json.json* will be opened for editing. Take the [raw version](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/vscode-arm-snippets.json) of the snippets and copy and paste them into *json.json*
 
 ---
 
