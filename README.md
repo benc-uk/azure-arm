@@ -24,9 +24,6 @@ The file [**etc/vscode-arm-snippets.json**](etc/vscode-arm-snippets.json) contai
 #### IaaS Apps
 - tomcat-mysql
 
-#### IaaS Containers
-- [simple-container](iaas-containers/simple-container/)
-
 #### IaaS Linux VM
 - custom-img
 - ubuntu-existing-net
