@@ -12,11 +12,11 @@
 # Change as required!
 param(
     [string]$subname     = "Microsoft Azure Internal Consumption",
-    [string]$res_grp, 
+    [string]$group, 
     [string]$loc         = "westeurope",
     [string]$template, 
-    [string]$param_file  = $template.substring(0,$template.length-5) + ".parameters.json",
-    [string]$pub_key
+    [string]$paramFile   = $template.substring(0,$template.length-5) + ".parameters.json",
+    [string]$pubKey
 )
 
 ### Standard Azure login
@@ -32,23 +32,23 @@ try {
 Select-AzureRmSubscription -SubscriptionName $subname -ErrorAction Stop
 
 # Create the resource goup
-New-AzureRmResourceGroup -Name $res_grp -Location $loc -Force
+New-AzureRmResourceGroup -Name $group -Location $loc -Force
 
 $timestamp = ((Get-Date).ToUniversalTime()).ToString('yyyy-MM-dd_HH.mm')
 
 # Start the deployment, give the deployment a name with date/time stamp
 # Change mode as required, default & safe is 'Incremental'
-if($pub_key) {
-    $pub_key_data = Get-Content -Path $pub_key
-    New-AzureRmResourceGroupDeployment -ResourceGroupName $res_grp `
+if($pubKey) {
+    $pub_key_data = Get-Content -Path $pubKey
+    New-AzureRmResourceGroupDeployment -ResourceGroupName $group `
                                    -Name "deployment_$($timestamp)" `
                                    -TemplateFile $template `
-                                   -TemplateParameterFile $param_file `
+                                   -TemplateParameterFile $paramFile `
                                    -Mode Incremental -Verbose -sshKey $pub_key_data
 } else {
-    New-AzureRmResourceGroupDeployment -ResourceGroupName $res_grp `
+    New-AzureRmResourceGroupDeployment -ResourceGroupName $group `
                                    -Name "deployment_$($timestamp)" `
                                    -TemplateFile $template `
-                                   -TemplateParameterFile $param_file `
+                                   -TemplateParameterFile $paramFile `
                                    -Mode Incremental -Verbose                                  
 }
