@@ -198,11 +198,11 @@
   ],
   
   "outputs": {
-    "public_ip": {
+    "publicIp": {
       "type": "string",
       "value": "[reference(variables('publicIpName')).ipAddress]"
     },
-    "ssh_command": {
+    "sshCommand": {
       "type": "string",
       "value": "[concat('ssh ', parameters('username'), '@', reference(variables('publicIpName')).ipAddress)]"
     }
