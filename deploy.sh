@@ -3,8 +3,8 @@
 ##### deploy.sh ################################################################
 # Purpose: General purpose ARM template deployment script for Azure CLI 2.0
 # Author:  Ben Coleman
-# Date:    23-05-2017
-# Version: 1.0
+# Date:    23-06-2017
+# Version: 1.1
 ################################################################################
 
 # Defaults
@@ -19,7 +19,7 @@ usage(){
 echo "\
 deploy.sh - Deploy an Azure resource template
 Parameters:
-    -f, --file           Input template file (required)
+    -t, --template       Input template file (required)
     [-g, --group]        Resource group to deploy to, will be created
     [-l, --location]     Region or location for the resource group, default: westeurope
     [-p, --parameters]   Parameter file, if ommited then <inputfile>.parameters.json is used
@@ -29,14 +29,14 @@ Parameters:
 }
 
 # Param handling stuff
-OPTS=`getopt -o f:g:p:l:s:h --long file:,group:,location:,subscription:,parameters:,help -n 'parse-options' -- "$@"`
+OPTS=`getopt -o t:g:p:l:s:h --long template:,group:,location:,subscription:,parameters:,help -n 'parse-options' -- "$@"`
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; usage; exit 1 ; fi
 eval set -- "$OPTS"
 
 # Param handling stuff
 while true; do
   case "$1" in
-    -f | --file ) FILE="$2"; shift; shift;;
+    -t | --template ) FILE="$2"; shift; shift;;
     -g | --group ) GROUP="$2"; shift; shift;;
     -p | --parameters ) PARAMS="$2"; shift; shift;;
     -l | --location ) LOC="$2"; shift; shift;;
@@ -52,7 +52,7 @@ if [ ${HELP} = true ]; then
   exit 0
 fi
 
-# We need the file param at a minimum
+# We need the template param at a minimum
 if [ -z ${FILE} ]; then
   usage
   exit 1
