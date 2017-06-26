@@ -4,6 +4,7 @@
    "parameters": {
       "webSiteName": {
          "type": "string",
+         "defaultValue": "demosite",
          "minLength": 1,
          "metadata": {
             "description": "Name of the Azure Web app to create"

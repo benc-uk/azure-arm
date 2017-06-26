@@ -2,10 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "vmName":          {"value": "test2"},
-        "vmSize":          {"value": "Standard_A0"},
-        "username":         {"value": "ben"},
-        "sshKey":          {"value": "ssh-rsa 1234567890SUPERSECRET0987654321 rsa-key-20160706"},
-        "ubuntuVersion":   {"value": "16.04.0-LTS"}
+        "vmName":         {"value": "test2"},
+        "vmSize":         {"value": "Standard_A1"},
+        "username":       {"value": "ben"},
+        "sshKey":         {"value": "ssh-rsa 1234567890SUPERSECRET0987654321 rsa-key-20160706"},
+        "ubuntuVersion":  {"value": "16.04.0-LTS"},
+        "subnetName":     {"value": "default"},    
+        "vnetName":       {"value": "devops-vnet"}      
     }
 }
