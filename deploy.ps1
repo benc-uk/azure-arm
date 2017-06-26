@@ -3,23 +3,34 @@
     Standard ARM deployment from given template
 .DESCRIPTION
     Deploy an ARM template to Azure in given location & subscription
-    Additional input parameter file is expected
+    Additional input parameter file is expected, but the script will look for <template>.parameters.json 
 .NOTES
     Author:   Ben Coleman
-    Date/Ver: Feb 2017, v2
+    Date/Ver: June 2017, v2.5
 #>
 
 # Change as required!
 param(
     [string]$subname     = "Microsoft Azure Internal Consumption",
+    [Parameter(Mandatory=$true)]
     [string]$group, 
     [string]$loc         = "westeurope",
+    [Parameter(Mandatory=$true)]
     [string]$template, 
-    [string]$paramFile   = $template.substring(0,$template.length-5) + ".parameters.json",
-    [string]$pubKey
+    [string]$paramFile,
+    [string]$pubKey,
+    [string]$params
 )
 
-### Standard Azure login
+# Can override template parameters in the param file by providing them as a string, e.g. "foo=bar"
+$paramHash = ConvertFrom-StringData -StringData $params
+
+# Try to guess param file if not supplied, with the filename <template>.parameters.json 
+if(!$paramFile) {
+    $paramFile = ($template.substring(0, $template.length - 5)) + ".parameters.json"
+}
+
+# Standard Azure login
 try {
     Select-AzureRmProfile -Path "$env:userprofile\.azureprof.json" -ErrorAction Stop
     Get-AzureRmSubscription -ErrorAction SilentlyContinue | Out-Null
@@ -44,11 +55,11 @@ if($pubKey) {
                                    -Name "deployment_$($timestamp)" `
                                    -TemplateFile $template `
                                    -TemplateParameterFile $paramFile `
-                                   -Mode Incremental -Verbose -sshKey $pub_key_data
+                                   -Mode Incremental -Verbose @paramHash -sshKey $pub_key_data 
 } else {
     New-AzureRmResourceGroupDeployment -ResourceGroupName $group `
                                    -Name "deployment_$($timestamp)" `
                                    -TemplateFile $template `
                                    -TemplateParameterFile $paramFile `
-                                   -Mode Incremental -Verbose                                  
+                                   -Mode Incremental -Verbose @paramHash
 }
