@@ -22,8 +22,8 @@ param(
     [string]$params
 )
 
-# Can override template parameters in the param file by providing them as a string, e.g. "foo=bar"
-$paramHash = ConvertFrom-StringData -StringData $params
+# Can override template parameters in the param file by providing them as a string, e.g. "foo=bar|name=fred"
+$paramHash = ConvertFrom-StringData -StringData ($params.Replace('|', " `n "))
 
 # Try to guess param file if not supplied, with the filename <template>.parameters.json 
 if(!$paramFile) {
