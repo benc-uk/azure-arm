@@ -5,7 +5,7 @@
         "vmName":          {"value": "jenkins-ansible"},
         "imageName":       {"value": "imgtest"},
         "vmSize":          {"value": "Standard_A0_v2"},
-        "username":         {"value": "ben"},
+        "username":        {"value": "ben"},
         "sshKey":          {"value": "ssh-rsa 1234567890SUPERSECRET0987654321 rsa-key-20160706"}
     }
 }
