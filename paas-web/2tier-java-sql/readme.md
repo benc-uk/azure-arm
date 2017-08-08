@@ -8,7 +8,7 @@ Create a Web App and Azure SQL instance, configure Web App to use Tomcat and Jav
 - Azure SQL DB
 
 ### Quick Deploy
-[![deploy](http://files.bencoleman.co.uk/img/azuredeploy.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbenc-uk%2Fazure-arm%2Fmaster%2Fpaas-web%2Fwebapp-2tier-sql%2Fazuredeploy.json)  
+[![deploy](https://user-images.githubusercontent.com/14982936/29083503-e23aa98c-7c60-11e7-8436-5f3c32b9d8e3.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbenc-uk%2Fazure-arm%2Fmaster%2Fpaas-web%2Fwebapp-2tier-sql%2Fazuredeploy.json)  
 
 ### Parameters
 - `webSiteName`: Web app name (globally unique)

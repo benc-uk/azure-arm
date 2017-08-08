@@ -18,7 +18,7 @@ The file [**etc/vscode-arm-snippets.json**](etc/vscode-arm-snippets.json) contai
 
 ---
 
-# Template List
+# Template Collection
 
 ## IaaS Templates
 #### IaaS Apps
