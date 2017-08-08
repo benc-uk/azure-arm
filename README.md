@@ -24,6 +24,11 @@ The file [**etc/vscode-arm-snippets.json**](etc/vscode-arm-snippets.json) contai
 #### IaaS Apps
 - tomcat-mysql
 
+#### IaaS Containers
+- linux-container
+- windows-container
+- multi-container-app
+
 #### IaaS Linux VM
 - custom-img
 - ubuntu-existing-net
@@ -45,6 +50,7 @@ The file [**etc/vscode-arm-snippets.json**](etc/vscode-arm-snippets.json) contai
 - [linux-acr-deploy](paas-web/linux-acr-deploy/)
 - [linux-acr-existing](paas-web/linux-acr-existing/)
 - [with-firewall](paas-web/with-firewall/)
+- [basic-webapp](paas-web/basic-webapp/)
 
 ## Other Templates
 - [empty](empty/)

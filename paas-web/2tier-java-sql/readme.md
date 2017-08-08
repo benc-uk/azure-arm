@@ -13,7 +13,7 @@ Create a Web App and Azure SQL instance, configure Web App to use Tomcat and Jav
 ### Parameters
 - `webSiteName`: Web app name (globally unique)
 - `appSizingTier`: Size/SKU of app service
-- `appInstanceCount`: Nummber of instances/workers
+- `appInstanceCount`: Number of instances/workers
 - `tomcatVersion`: The version of Tomcat to use (7.0, 8.0, 8.5)
 - `dbName`: Name of the Azure SQL DB
 - `dbAdminUser`: Admin user account to access the DB 
