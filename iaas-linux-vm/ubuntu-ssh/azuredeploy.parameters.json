@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "vmName":          {"value": "testvm01"},
+        "vmName":          {"value": "vm01"},
         "vmSize":          {"value": "Standard_A2_v2"},
         "username":        {"value": "ben"},
         "sshKey":          {"value": "ssh-rsa 1234567890SUPERSECRET0987654321 rsa-key-20160706"},
