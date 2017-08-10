@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "servicePlanName":      { "value": "function-plan" },
-        "functionAppName":      { "value": "function-demobc2" },
+        "functionAppName":      { "value": "function-demoapp" },
         "sourceRepo":           { "value": "https://github.com/benc-uk/azure-functions.git" },
         "sourceBranch":         { "value": "master" }
     }
