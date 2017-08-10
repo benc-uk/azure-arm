@@ -7,7 +7,7 @@ Create a Function App and deploy code to it from Github repo
 - Storage Account
 
 ### Quick Deploy
-[![deploy](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/azuredeploy.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbenc-uk%2Fazure-arm%2Fmaster%2Fpaas-web%2Ffunction-app-withcode%2Fazuredeploy.json)  
+[![deploy](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/azuredeploy.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbenc-uk%2Fazure-arm%2Fmaster%2Fpaas-other%2Ffunction-app-withcode%2Fazuredeploy.json)  
 
 ### Parameters
 - `servicePlanName`: Name of app service plan
