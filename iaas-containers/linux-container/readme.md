@@ -11,7 +11,7 @@ Create a basic container using Azure Container Instances. The provided parameter
 - `containerName`: Name of the container resource in Azure
 - `port`: Port the container exposes and is listening on
 - `image`: Reference to Docker repo, image & tag in standard notation
-- `previewLocation`: During preview only available in these regions: westeurope westus & eastus
+- `previewLocation`: During preview, only available in these regions: **westeurope**, **westus** & **eastus**
 
 ### Outputs
 - `newContainerURL`: URL of new container including public IP

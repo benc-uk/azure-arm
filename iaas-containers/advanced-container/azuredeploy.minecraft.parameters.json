@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "containerName": {
+      "value": "minecraft"
+    },
+    "port": {
+      "value": "25565"
+    },
+    "image": {
+      "value": "itzg/minecraft-server"
+    },
+    "previewLocation": {
+      "value": "eastus"
+    },
+    "volumeShareName": {
+      "value": "minecraft-vol"
+    },
+    "volumeMountPath": {
+      "value": "/data"
+    },
+    "storageAcctName": {
+      "value": "acistore936"
+    },
+    "envVars": {
+      "value": [ 
+        {"name": "EULA", "value": "TRUE" }, 
+        {"name": "MOTD", "value": "Minecraft server running in Azure Container Instances. Yay!" },
+        {"name": "ICON", "value": "https://github.com/MicrosoftDocs/azure-docs/raw/f8d33a705bfdd470863591a660098109c842d21a/articles/container-instances/media/container-instances.png" }
+      ]
+    }
+  }
+}
