@@ -77,4 +77,4 @@ echo "Will use Azure subscription '$SUB'..."
 echo "Creating resource group '$GROUP' in region '$LOC'..."
 az group create -n $GROUP -l $LOC -o table
 echo "Deploying template '$FILE'..."
-az group deployment create -g $GROUP --template-file "$FILE" --parameters "@${PARAMS}" --verbose --name "deployment_$DATE" 
+az group deployment create -g $GROUP --template-file "$FILE" --parameters "@${PARAMS}" --verbose --name "deployment_$DATE" -o jsonc --query "[properties.{outputs: outputs},properties.{status: provisioningState}]"
