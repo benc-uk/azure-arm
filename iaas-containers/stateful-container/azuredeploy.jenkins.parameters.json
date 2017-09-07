@@ -9,19 +9,19 @@
       "value": "8080"
     },
     "image": {
-      "value": "jenkins/jenkins:alpine"
+      "value": "bencuk/jenkins"
     },
     "previewLocation": {
       "value": "eastus"
     },
     "volumeShareName": {
-      "value": "jenkins-vol"
+      "value": "jenkinsvol"
     },
     "volumeMountPath": {
       "value": "/var/jenkins_home"
     },
     "storageAcctName": {
-      "value": "acistore27262"
+      "value": "acistore"
     }  
   }
 }

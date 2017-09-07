@@ -1,5 +1,5 @@
-# Linux Container Instance - Advanced
-Create a basic container using Azure Container Instances, backed with a persistent volume and with environmental variables.  
+# Linux Container Instance - Persistent & Stateful
+Create a Linux container using Azure Container Instances, backed with a persistent volume and passed startup environmental variables.  
 The mounted volume is held in Azure Storage account via an Azure File share, the template does not create this (as this is not possible to create shares via ARM), so it should be pre-provisioned. A [bash Azure CLI script is provided](create-share.sh) which will create both a storage account and a named shared within it, or you can use the portal.
 
 [Full docs on using volumes and Azure files with ACI](https://docs.microsoft.com/en-gb/azure/container-instances/container-instances-mounting-azure-files-volume)
