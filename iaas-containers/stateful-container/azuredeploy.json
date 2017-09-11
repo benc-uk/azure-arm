@@ -9,6 +9,20 @@
         "description": "Name of the container resource in Azure"
       }
     },
+    "containerMem": {
+      "defaultValue": 1.0,
+      "type": "string",
+      "metadata": {
+        "description": "Requested memory for container instance"
+      }
+    },
+    "containerCpu": {
+      "defaultValue": 1.0,
+      "type": "string",
+      "metadata": {
+        "description": "Requested CPU cores for container instance"
+      }
+    },        
     "port": {
       "defaultValue": "80",
       "type": "string",
@@ -65,8 +79,6 @@
     }
   },
   "variables": {
-    "memory": 4.0,
-    "cpu": 2.0
   },
   "resources": [
     {
@@ -92,8 +104,8 @@
               "environmentVariables": "[parameters('envVars')]",
               "resources": {
                 "requests": {
-                  "cpu": "[variables('cpu')]",
-                  "memoryInGb": "[variables('memory')]"
+                  "cpu": "[parameters('containerCpu')]",
+                  "memoryInGb": "[parameters('containerMem')]"
                 }
               }
             }
