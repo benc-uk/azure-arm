@@ -12,6 +12,8 @@ The mounted volume is held in Azure Storage account via an Azure File share, the
 
 ### Parameters
 - `containerName`: Name of the container resource in Azure
+- `containerMem`: Requested memory for container instance
+- `containerCpu`: Requested CPU cores for container instance
 - `port`: Port the container exposes and is listening on
 - `image`: Reference to Docker repo, image & tag in standard notation
 - `previewLocation`: During preview, only available in these regions: **westeurope**, **westus** & **eastus**
