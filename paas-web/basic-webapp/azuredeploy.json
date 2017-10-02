@@ -38,7 +38,6 @@
       "servicePlanName": "app-plan"
    },
    "resources": [
-
       {
          "type": "Microsoft.Web/serverfarms",
          "apiVersion": "2015-08-01",
@@ -49,7 +48,6 @@
             "capacity": "[parameters('appInstanceCount')]"
          }
       },
-
       {
          "type": "Microsoft.Web/sites",
          "apiVersion": "2015-08-01",
@@ -62,7 +60,6 @@
             "[concat('Microsoft.Web/serverfarms/', variables('servicePlanName'))]"
          ]
       }
-
    ],
    "outputs": {
       "websiteUrl": {
