@@ -35,8 +35,7 @@
       }
    },
    "variables": {
-      "servicePlanName": "app-plan",
-      "nodeVersion": "8.9.0"
+      "servicePlanName": "app-plan"
    },
    "resources": [
       {
@@ -55,12 +54,7 @@
          "name": "[parameters('webSiteName')]",
          "location": "[resourceGroup().location]",
          "properties": {
-            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('servicePlanName'))]",
-            "siteConfig": {
-               "appSettings": [
-                   { "name": "WEBSITE_NODE_DEFAULT_VERSION", "value": "[variables('nodeVersion')]" }
-               ]
-            }          
+            "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('servicePlanName'))]"        
          },
          "dependsOn": [
             "[concat('Microsoft.Web/serverfarms/', variables('servicePlanName'))]"
