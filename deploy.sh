@@ -74,6 +74,7 @@ fi
 
 # Create resource group and start deployment
 echo "Will use Azure subscription '$SUB'..."
+az account set -s "$SUB"
 echo "Creating resource group '$GROUP' in region '$LOC'..."
 az group create -n $GROUP -l $LOC -o table
 echo "Deploying template '$FILE'..."
