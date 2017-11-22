@@ -1,7 +1,5 @@
 # ARM Template Collection
 
-TEST
-
 This is my set of useful basic ARM templates, covering a range of standard simple scenarios. It is grouped by IaaS / PaaS and then use-cases under that.  
 There are some templates covering advanced or less well recorded ARM features.
 
