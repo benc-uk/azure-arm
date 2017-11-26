@@ -84,7 +84,7 @@
       "kind": "Node.JS",
       "scale": null,
       "properties": {
-        "Application_Type": "web",
+        "Application_Type": "Node.JS",
         "ApplicationId": "[variables('appInsightsName')]"
       }
     }
