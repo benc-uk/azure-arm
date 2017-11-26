@@ -78,7 +78,7 @@
       "type": "microsoft.insights/components",
       "location": "[resourceGroup().location]",
       "apiVersion": "2015-05-01",
-      "kind": "web",
+      "kind": "Node.JS",
       "scale": null,
       "properties": {
         "Application_Type": "web",
