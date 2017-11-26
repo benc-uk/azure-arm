@@ -7,6 +7,7 @@
 .NOTES
     Author:   Ben Coleman
     Date/Ver: June 2017, v2.5
+    Date/Ver: Nov 2017, v2.6 - Updated to use Save-AzureRmContext
 #>
 
 # Change as required!
@@ -32,11 +33,11 @@ if(!$paramFile) {
 
 # Standard Azure login
 try {
-    Select-AzureRmProfile -Path "$env:userprofile\.azureprof.json" -ErrorAction Stop
+    Import-AzureRmContext -Path "$env:userprofile\.azureprofile.json" -ErrorAction Stop
     Get-AzureRmSubscription -ErrorAction SilentlyContinue | Out-Null
 } catch {
     Login-AzureRmAccount -ErrorAction Stop
-    Save-AzureRmProfile -Path "$env:userprofile\.azureprof.json"
+    Save-AzureRmContext -Path "$env:userprofile\.azureprofile.json"
 }
 
 # Select which Azure subscription
