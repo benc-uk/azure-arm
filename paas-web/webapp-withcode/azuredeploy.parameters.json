@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "webSiteName":      { "value": "bensnewcooldemosite" },
+        "webSiteName":      { "value": "anewcooldemosite" },
         "appSizingTier":    { "value": "B3" },
         "appInstanceCount": { "value": 1 },
         "sourceRepo":       { "value": "https://github.com/benc-uk/dotnet-demoapp.git" },

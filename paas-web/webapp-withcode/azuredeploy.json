@@ -4,8 +4,6 @@
    "parameters": {
       "webSiteName": {
          "type": "string",
-         "defaultValue": "demosite",
-         "minLength": 1,
          "metadata": {
             "description": "Name of the Azure Web app to create"
          }
@@ -19,7 +17,10 @@
             "B3",
             "S1",
             "S2",
-            "S3"
+            "S3",
+            "P1",
+            "P2",
+            "P3"
          ],
          "metadata": {
             "description": "Describes plan's pricing tier and instance size. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
