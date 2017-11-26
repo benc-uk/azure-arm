@@ -73,7 +73,8 @@
         }
       },
       "dependsOn": [
-        "[concat('Microsoft.Web/serverfarms/', variables('servicePlanName'))]"
+        "[concat('Microsoft.Web/serverfarms/', variables('servicePlanName'))]",
+        "[concat('microsoft.insights/components/', variables('appInsightsName'))]"
       ]
     },
     {
