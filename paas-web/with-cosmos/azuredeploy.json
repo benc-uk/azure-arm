@@ -44,7 +44,9 @@
    },
    "variables": {
       "servicePlanName": "demo-app-plan",
-      "appInsightsName": "demo-app-insights"
+      "appInsightsName": "demo-app-insights",
+      "appInsightsType": "Node.JS",
+      "nodeVersion": "6.11.5"
    },
    "resources": [
       {
@@ -72,7 +74,7 @@
                   },
                   {
                      "name": "WEBSITE_NODE_DEFAULT_VERSION",
-                     "value": "6.9.1"
+                     "value": "[variables('nodeVersion')]"
                   }
                ]
             }
@@ -103,10 +105,10 @@
          "type": "microsoft.insights/components",
          "location": "[resourceGroup().location]",
          "apiVersion": "2015-05-01",
-         "kind": "Node.JS",
+         "kind": "[variables('appInsightsType')]",
          "scale": null,
          "properties": {
-            "Application_Type": "web",
+            "Application_Type": "[variables('appInsightsType')]",
             "ApplicationId": "[variables('appInsightsName')]"
          }
       }
