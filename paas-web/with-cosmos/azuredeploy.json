@@ -46,7 +46,7 @@
     "servicePlanName": "demo-app-plan",
     "appInsightsName": "demo-app-insights",
     "appInsightsType": "Node.JS",
-    "nodeVersion": "6.11.5"
+    "nodeVersion": "8.9.0"
   },
   "resources": [
     {
