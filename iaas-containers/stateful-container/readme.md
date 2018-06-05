@@ -8,7 +8,7 @@ The mounted volume is held in Azure Storage account via an Azure File share, the
 - Microsoft.ContainerInstance/containerGroups
 
 ### Quick Deploy
-[![deploy](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/azuredeploy.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbenc-uk%2Fazure-arm%2Fmaster%2Fiaas-containers%2Fadvanced-container%2Fazuredeploy.json)  
+[![deploy](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/azuredeploy.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbenc-uk%2Fazure-arm%2Fmaster%2Fiaas-containers%2Fstateful-container%2Fazuredeploy.json)  
 
 ### Parameters
 - `containerName`: Name of the container resource in Azure
