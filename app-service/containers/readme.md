@@ -1,18 +1,33 @@
-# App Service Container Web App
-Create a Container Web App (Linux) to run a custom Docker image stored in an existing *Azure Container Registry*
+# App Service - Plan
 
-### Deployed Resources
+## Templates
+- **web-app-acr.json** - Deploy web app using image in Azure Container Registry
+- **web-app-public.json** - Deploy web app using image in Dockerhub
+
+## Deployed Resources
 - Web App (Linux)
 
-### Quick Deploy
-[![deploy](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/azuredeploy.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbenc-uk%2Fazure-arm%2Fmaster%2Fweb%2Fcontainer-acr%2Fazuredeploy.json)  
+## Quick Deploy
+### Using Azure Container Registry
+[![deploy](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/azuredeploy.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbenc-uk%2Fazure-arm%2Fmaster%2Fweb%2Fcontainers%2Fweb-app-acr.json)  
 
-### Parameters
+### Using Public Dockerhub
+[![deploy](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/azuredeploy.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbenc-uk%2Fazure-arm%2Fmaster%2Fweb%2Fcontainers%2Fweb-app-public.json)  
+
+## Parameters
+### web-app-acr
 - `siteName`: Web app name (globally unique)
-- `existingPlan`: Resource group and name of existing App Service Plan, e.g. `myResGrp/appPlanBlah`
-- `registryName`: Existing ACR instance name 
+- `existingPlan`: Resource group and name of existing App Service Plan, separated with forward slash, e.g. `myResGrp/appPlanBlah`
+- `registryName`: Name of existing ACR instance
 - `registryPassword`: Admin password for ACR
 - `imageNameTag`: Name and tag of your image
 
+### web-app-public
+- `siteName`: Web app name (globally unique)
+- `existingPlan`: Resource group and name of existing App Service Plan, separated with forward slash, e.g. `myResGrp/appPlanBlah`
+- `imageNameTag`: Name and tag of your image
+
+
 ### Notes
-The Azure Container Registry (ACR) must exist and contain the container image prior to deployment
+- The templates do not deploy an App Service Plan, this must exist first. See [this template to deploy a plan prior to using this template](../service-plans)
+- The Azure Container Registry (ACR) must exist and contain the container image prior to deployment
