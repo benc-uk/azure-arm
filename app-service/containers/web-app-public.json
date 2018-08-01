@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "siteName": {
+      "defaultValue": "demowebapp",
+      "type": "string"
+    },
+    "existingPlan": {
+      "defaultValue": "",
+      "type": "string"
+    },
+    "imageNameTag": {
+      "defaultValue": "myapp:latest",
+      "type": "string"
+    }  
+  },
+  "variables": {
+    "existingPlanRG": "[split(parameters('existingPlan'), '/')[0]]",
+    "existingPlanName": "[split(parameters('existingPlan'), '/')[1]]",
+    "serverFarmId": "[resourceId(variables('existingPlanRG'), 'Microsoft.Web/serverfarms', variables('existingPlanName'))]",
+  },
+  "resources": [
+    {
+      "name": "[parameters('siteName')]",
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2016-08-01",
+      "kind": "app,linux,container",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "serverFarmId": "[variables('serverFarmId')]",
+        "siteConfig": {
+          "appSettings": [
+          ],
+          "linuxFxVersion": "[concat('DOCKER|', parameters('imageNameTag'))]"
+        }
+      }
+    }
+  ]
+}

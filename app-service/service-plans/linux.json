@@ -1,0 +1,57 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "planName": {
+      "type": "string",
+      "defaultValue": "new-plan",
+      "metadata": {
+        "description": "Name of the app service plan"
+      }
+    },
+    "sizingTier": {
+      "type": "string",
+      "defaultValue": "B1",
+      "allowedValues": [
+        "B1",
+        "B2",
+        "B3",
+        "S1",
+        "S2",
+        "S3",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "metadata": {
+        "description": "Describes plan's pricing tier and instance size"
+      }
+    },
+    "instanceCount": {
+      "type": "int",
+      "defaultValue": 1,
+      "minValue": 1,
+      "maxValue": 10,
+      "metadata": {
+        "description": "Number of app service instances to create"
+      }
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "name": "[parameters('planName')]",
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2016-09-01",
+      "kind": "windows",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "reserved": true
+      },
+      "sku": {
+        "name": "[parameters('sizingTier')]",
+        "capacity": "[parameters('instanceCount')]"
+      }
+    }
+  ]
+}

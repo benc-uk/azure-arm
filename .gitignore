@@ -1,2 +1,2 @@
 .vscode/*
-azuredeploy.myparams.json
+**/*.myparams.json
