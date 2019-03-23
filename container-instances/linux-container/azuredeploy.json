@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "containerName": {
-      "defaultValue": "nano-iis-container",
+      "defaultValue": "my-container",
       "type": "string",
       "metadata": {
         "description": "Name of the container resource in Azure"
@@ -17,35 +17,23 @@
       }
     },
     "image": {
-      "defaultValue": "microsoft/iis:nanoserver",
+      "defaultValue": "microsoft/aci-helloworld",
       "type": "string",
       "metadata": {
         "description": "Reference to Docker repo, image & tag in standard notation"
       }
-    },
-    "previewLocation": {
-      "defaultValue": "westeurope",
-      "type": "string",
-      "allowedValues": [
-        "westeurope",
-        "westus",
-        "eastus"
-      ],
-      "metadata": {
-        "description": "During preview only available in these regions: westeurope westus & eastus"
-      }
     }
   },
   "variables": {
-    "memory": 3.5,
-    "cpu": 2.0
+    "memory": 1.0,
+    "cpu": 1.0
   },
   "resources": [
     {
       "name": "[parameters('containerName')]",
       "type": "Microsoft.ContainerInstance/containerGroups",
-      "apiVersion": "2017-08-01-preview",
-      "location": "[parameters('previewLocation')]",
+      "apiVersion": "2018-04-01",
+      "location": "[resourceGroup().location]",
       "properties": {
         "containers": [
           {
@@ -60,18 +48,18 @@
               "resources": {
                 "requests": {
                   "cpu": "[variables('cpu')]",
-                  "memoryInGb": "[variables('memory')]"
+                  "memoryInGB": "[variables('memory')]"
                 }
-              }              
+              }
             }
           }
         ],
-        "osType": "Windows",
+        "osType": "Linux",
         "ipAddress": {
           "type": "Public",
           "ports": [
             {
-              "protocol": "tcp",
+              "protocol": "TCP",
               "port": "[parameters('port')]"
             }
           ]

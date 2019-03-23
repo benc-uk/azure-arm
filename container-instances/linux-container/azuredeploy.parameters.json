@@ -10,9 +10,6 @@
     },
     "image": {
       "value": "bencuk/nodejs-demoapp"
-    },
-    "previewLocation": {
-      "value": "westeurope"
     }
   }
 }

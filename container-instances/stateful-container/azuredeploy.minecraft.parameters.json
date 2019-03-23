@@ -7,7 +7,6 @@
     "containerCpu":    { "value": "1.0" },
     "port":            { "value": "25565" },
     "image":           { "value": "itzg/minecraft-server" },
-    "previewLocation": { "value": "westeurope" },
     "volumeShareName": { "value": "mc2" },
     "volumeMountPath": { "value": "/data" },
     "storageAcctName": { "value": "acistore" },

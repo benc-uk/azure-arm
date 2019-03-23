@@ -3,7 +3,7 @@
 This is my set of useful basic ARM templates, covering a range of standard simple scenarios. It is grouped by IaaS / PaaS and then use-cases under that.  
 There are some templates covering advanced or less well recorded ARM features.
 
-For ease of management templates are grouped as a single template per folder with the standard name *azuredeploy.json* and supporting parameter file *azuredeploy.parameters.json*
+For ease of management, the templates are grouped as a single template per folder with the standard name *azuredeploy.json* and supporting parameter file *azuredeploy.parameters.json*
 
 ---
 
@@ -20,37 +20,10 @@ The file [**etc/vscode-arm-snippets.json**](etc/vscode-arm-snippets.json) contai
 
 # Template Collection
 
-## IaaS Templates
-#### IaaS Apps
-- tomcat-mysql
+## 2018 Update
+As a refresh/quality control sweep, older templates have been moved to the 'old' folder, anything tested and worked has been moved up to top level and logically grouped by Azure service type
 
-#### IaaS Containers
-- linux-container
-- windows-container
-- multi-container-app
+### [Azure Container Instances](container-instances/)
 
-#### IaaS Linux VM
-- custom-img
-- ubuntu-existing-net
-- ubuntu-multi-nic
-- ubuntu-pwd
-- ubuntu-ssh
+### [Azure App Service](app-service/)
 
-
-## PaaS Templates
-#### PaaS Other
-- function-app-withcode
-- iot-demo
-- service-bus-queue
-
-#### PaaS Web
-- [2tier-dotnet-sql](paas-web/2tier-dotnet-sql/)
-- [2tier-java-sql](paas-web/2tier-java-sql/)
-- [dotnet-deployapp](paas-web/dotnet-deployapp/)
-- [linux-acr-deploy](paas-web/linux-acr-deploy/)
-- [linux-acr-existing](paas-web/linux-acr-existing/)
-- [with-firewall](paas-web/with-firewall/)
-- [basic-webapp](paas-web/basic-webapp/)
-
-## Other Templates
-- [empty](empty/)

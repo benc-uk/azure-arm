@@ -10,9 +10,6 @@
     },
     "image": {
       "value": "bencuk/dotnet-demoapp:nanoserver"
-    },
-    "previewLocation": {
-      "value": "westeurope"
     }
   }
 }

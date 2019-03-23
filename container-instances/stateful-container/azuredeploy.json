@@ -37,18 +37,6 @@
         "description": "Reference to Docker repo, image & tag in standard notation"
       }
     },
-    "previewLocation": {
-      "defaultValue": "eastus",
-      "type": "string",
-      "allowedValues": [
-        "westeurope",
-        "westus",
-        "eastus"
-      ],
-      "metadata": {
-        "description": "During preview only available in these regions: westeurope westus & eastus"
-      }
-    },
     "volumeShareName": {
       "defaultValue": "acishare",
       "type": "string",
@@ -84,8 +72,8 @@
     {
       "name": "[parameters('containerName')]",
       "type": "Microsoft.ContainerInstance/containerGroups",
-      "apiVersion": "2017-08-01-preview",
-      "location": "[parameters('previewLocation')]",
+      "apiVersion": "2018-04-01",
+      "location": "[resourceGroup().location]",
       "properties": {
         "containers": [
           {
@@ -105,7 +93,7 @@
               "resources": {
                 "requests": {
                   "cpu": "[parameters('containerCpu')]",
-                  "memoryInGb": "[parameters('containerMem')]"
+                  "memoryInGB": "[parameters('containerMem')]"
                 }
               }
             }
@@ -116,7 +104,7 @@
           "type": "Public",
           "ports": [
             {
-              "protocol": "tcp",
+              "protocol": "TCP",
               "port": "[parameters('port')]"
             }
           ]

@@ -8,18 +8,6 @@
       "metadata": {
         "description": "Name of the container resource in Azure"
       }
-    },
-    "previewLocation": {
-      "defaultValue": "westeurope",
-      "type": "string",
-      "allowedValues": [
-        "westeurope",
-        "westus",
-        "eastus"
-      ],
-      "metadata": {
-        "description": "During preview only available in these regions: westeurope westus & eastus"
-      }
     }
   },
   "variables": {
@@ -34,8 +22,8 @@
     {
       "name": "[parameters('containerName')]",
       "type": "Microsoft.ContainerInstance/containerGroups",
-      "apiVersion": "2017-08-01-preview",
-      "location": "[parameters('previewLocation')]",
+      "apiVersion": "2018-04-01",
+      "location": "[resourceGroup().location]",
       "properties": {
         "containers": [
           {
@@ -50,7 +38,7 @@
               "resources": {
                 "requests": {
                   "cpu": "[variables('cpu')]",
-                  "memoryInGb": "[variables('memory')]"
+                  "memoryInGB": "[variables('memory')]"
                 }
               }
             }
@@ -67,7 +55,7 @@
               "resources": {
                 "requests": {
                   "cpu": "[variables('cpu')]",
-                  "memoryInGb": "[variables('memory')]"
+                  "memoryInGB": "[variables('memory')]"
                 }
               }
             }
@@ -78,11 +66,11 @@
           "type": "Public",
           "ports": [
             {
-              "protocol": "tcp",
+              "protocol": "TCP",
               "port": "[variables('image1Port')]"
             },
             {
-              "protocol": "tcp",
+              "protocol": "TCP",
               "port": "[variables('image2Port')]"
             }
           ]

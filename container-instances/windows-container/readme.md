@@ -5,13 +5,12 @@ Create a basic container using Azure Container Instances. The provided parameter
 - Microsoft.ContainerInstance/containerGroups
 
 ### Quick Deploy
-[![deploy](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/azuredeploy.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbenc-uk%2Fazure-arm%2Fmaster%2Fiaas-containers%2Fwindows-container%2Fazuredeploy.json)  
+[![deploy](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/azuredeploy.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbenc-uk%2Fazure-arm%2Fmaster%2Fcontainer-instances%2Fwindows-container%2Fazuredeploy.json)  
 
 ### Parameters
 - `containerName`: Name of the container resource in Azure
 - `port`: Port the container exposes and is listening on
 - `image`: Reference to Docker repo, image & tag in standard notation
-- `previewLocation`: During preview, only available in these regions: **westeurope**, **westus** & **eastus**
 
 ### Outputs
 - `newContainerURL`: URL of new container including public IP
