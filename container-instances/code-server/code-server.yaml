@@ -1,0 +1,50 @@
+apiVersion: '2018-10-01'
+location: westeurope
+name: code-server
+type: Microsoft.ContainerInstance/containerGroups
+
+properties:
+  containers:
+  - name: code-server
+    properties:
+      command:
+      - code-server
+      - --allow-http
+      - --password=Password123!
+      - --port=80
+      image: codercom/code-server
+      ports:
+      - port: 80
+      resources:
+        requests:
+          cpu: 1.0
+          memoryInGB: 1.5
+      volumeMounts:
+      - mountPath: /root/project
+        name: project-vol
+      - mountPath: /root/.local/share/code-server
+        name: data-vol
+
+  ipAddress:
+    dnsNameLabel: code-server
+    ports:
+    - port: 80
+      protocol: TCP
+    type: Public
+    
+  osType: Linux
+
+  volumes:
+  - name: project-vol
+    azureFile:
+      shareName: code-server-proj
+      storageAccountName: bcmisc
+      storageAccountKey: changeme
+
+  - name: data-vol
+    azureFile:
+      shareName: code-server-data
+      storageAccountName: bcmisc
+      storageAccountKey: changeme
+
+
