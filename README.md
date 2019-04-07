@@ -1,7 +1,6 @@
 # ARM Template Collection
 
-This is my set of useful basic ARM templates, covering a range of standard simple scenarios. It is grouped by IaaS / PaaS and then use-cases under that.  
-There are some templates covering advanced or less well recorded ARM features.
+This is a set of curated and custom created ARM templates, covering a range of standard simple scenarios. It focuses solely on PaaS and containers. 
 
 For ease of management, the templates are grouped as a single template per folder with the standard name *azuredeploy.json* and supporting parameter file *azuredeploy.parameters.json*
 
