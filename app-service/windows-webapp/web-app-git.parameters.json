@@ -3,6 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "siteName":      { "value": "changeme" },
+    "existingPlan":  { "value": "myResGroup/myAppPlan" },
     "gitRepoURL":    { "value": "https://github.com/foo/changeme.git" },
     "gitRepoBranch": { "value": "master" }        
   }
