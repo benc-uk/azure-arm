@@ -1,4 +1,4 @@
-# App Service Linux - Containers
+# App Service Linux - Basic
 
 ## Templates
 - **web-app-acr.json** - Deploy web app using image in Azure Container Registry
