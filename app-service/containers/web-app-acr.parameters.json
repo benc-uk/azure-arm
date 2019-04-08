@@ -16,6 +16,9 @@
     },
     "imageNameTag": {
       "value": "myapp:latest"
-    }
+    },
+    "appSettings": { 
+      "value": [] 
+    } 
   }
 }

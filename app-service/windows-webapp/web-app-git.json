@@ -16,13 +16,27 @@
       "gitRepoBranch": {
          "defaultValue": "master",
          "type": "string"
+      },
+      "appSettings": {
+         "defaultValue": [],
+         "type": "array"
       }
    },
    "variables": {
       "existingPlanRG": "[split(parameters('existingPlan'), '/')[0]]",
       "existingPlanName": "[split(parameters('existingPlan'), '/')[1]]",
-      "serverFarmId": "[resourceId(variables('existingPlanRG'), 'Microsoft.Web/serverfarms', variables('existingPlanName'))]"
-
+      "serverFarmId": "[resourceId(variables('existingPlanRG'), 'Microsoft.Web/serverfarms', variables('existingPlanName'))]",
+      "baseAppSettings": [
+         {
+            "name": "WEBSITE_NODE_DEFAULT_VERSION",
+            "value": "10.14.1"
+         },
+         {
+            "name": "WEBSITE_NPM_DEFAULT_VERSION",
+            "value": "6.4.1"
+         }
+      ],
+      "allAppSettings": "[concat(parameters('appSettings'), variables('baseAppSettings'))]"
    },
    "resources": [
       {
@@ -31,10 +45,14 @@
          "name": "[parameters('siteName')]",
          "location": "[resourceGroup().location]",
          "properties": {
-            "serverFarmId": "[variables('serverFarmId')]"
+            "serverFarmId": "[variables('serverFarmId')]",
+            "siteConfig": {
+               "appSettings": "[variables('allAppSettings')]"
+            }
          },
          "resources": [
             {
+               "condition": "[greater(length(parameters('gitRepoURL')), 0)]",
                "apiVersion": "2018-02-01",
                "name": "web",
                "type": "sourcecontrols",

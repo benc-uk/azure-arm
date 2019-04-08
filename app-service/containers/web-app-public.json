@@ -13,12 +13,18 @@
     "imageNameTag": {
       "defaultValue": "myapp:latest",
       "type": "string"
-    }  
+    },
+    "appSettings": {
+       "defaultValue": [],
+       "type": "array"
+    } 
   },
   "variables": {
     "existingPlanRG": "[split(parameters('existingPlan'), '/')[0]]",
     "existingPlanName": "[split(parameters('existingPlan'), '/')[1]]",
     "serverFarmId": "[resourceId(variables('existingPlanRG'), 'Microsoft.Web/serverfarms', variables('existingPlanName'))]",
+    "baseAppSettings": [],   
+    "allAppSettings": "[concat(parameters('appSettings'), variables('baseAppSettings'))]"     
   },
   "resources": [
     {
@@ -30,8 +36,7 @@
       "properties": {
         "serverFarmId": "[variables('serverFarmId')]",
         "siteConfig": {
-          "appSettings": [
-          ],
+          "appSettings": "[variables('allAppSettings')]",
           "linuxFxVersion": "[concat('DOCKER|', parameters('imageNameTag'))]"
         }
       }

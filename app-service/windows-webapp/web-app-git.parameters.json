@@ -5,6 +5,7 @@
     "siteName":      { "value": "changeme" },
     "existingPlan":  { "value": "myResGroup/myAppPlan" },
     "gitRepoURL":    { "value": "https://github.com/foo/changeme.git" },
-    "gitRepoBranch": { "value": "master" }        
+    "gitRepoBranch": { "value": "master" },
+    "appSettings":   { "value": [] }      
   }
 }

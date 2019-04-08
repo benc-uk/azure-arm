@@ -21,13 +21,32 @@
     "imageNameTag": {
       "defaultValue": "myapp:latest",
       "type": "string"
-    }  
+    },
+    "appSettings": {
+       "defaultValue": [],
+       "type": "array"
+    }
   },
   "variables": {
     "existingPlanRG": "[split(parameters('existingPlan'), '/')[0]]",
     "existingPlanName": "[split(parameters('existingPlan'), '/')[1]]",
     "serverFarmId": "[resourceId(variables('existingPlanRG'), 'Microsoft.Web/serverfarms', variables('existingPlanName'))]",
-    "fullImageName": "[concat(parameters('registryName'), '.azurecr.io/', parameters('imageNameTag'))]"
+    "fullImageName": "[concat(parameters('registryName'), '.azurecr.io/', parameters('imageNameTag'))]",
+    "baseAppSettings": [
+      {
+        "name": "DOCKER_REGISTRY_SERVER_URL",
+        "value": "[concat('https://', parameters('registryName'), '.azurecr.io')]"
+      },
+      {
+        "name": "DOCKER_REGISTRY_SERVER_USERNAME",
+        "value": "[parameters('registryName')]"
+      },
+      {
+        "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+        "value": "[parameters('registryPassword')]"
+      }
+    ],   
+    "allAppSettings": "[concat(parameters('appSettings'), variables('baseAppSettings'))]" 
   },
   "resources": [
     {
@@ -39,20 +58,7 @@
       "properties": {
         "serverFarmId": "[variables('serverFarmId')]",
         "siteConfig": {
-          "appSettings": [
-            {
-              "name": "DOCKER_REGISTRY_SERVER_URL",
-              "value": "[concat('https://', parameters('registryName'), '.azurecr.io')]"
-            },
-            {
-              "name": "DOCKER_REGISTRY_SERVER_USERNAME",
-              "value": "[parameters('registryName')]"
-            },
-            {
-              "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
-              "value": "[parameters('registryPassword')]"
-            }
-          ],
+          "appSettings": "[variables('allAppSettings')]",
           "linuxFxVersion": "[concat('DOCKER|', variables('fullImageName'))]"
         }
       }

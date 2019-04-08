@@ -10,6 +10,9 @@
     },
     "imageNameTag": {
       "value": "myapp"
-    }
+    },
+    "appSettings": { 
+      "value": [] 
+    }  
   }
 }
