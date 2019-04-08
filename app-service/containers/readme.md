@@ -1,4 +1,4 @@
-# App Service Linux - Containers
+# App Service - Linux Containers
 
 ## Templates
 - **web-app-acr.json** - Deploy web app using image in Azure Container Registry
@@ -28,6 +28,6 @@
 - `imageNameTag`: Name and tag of your image
 
 
-### Notes
+## Notes
 - The templates **do not deploy an App Service Plan**, this must exist first. See [this template to deploy a plan prior to using this template](../service-plans)
 - The Azure Container Registry (ACR) must exist and contain the container image prior to deployment
