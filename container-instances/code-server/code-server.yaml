@@ -46,5 +46,3 @@ properties:
       shareName: code-server-data
       storageAccountName: bcmisc
       storageAccountKey: changeme
-
-

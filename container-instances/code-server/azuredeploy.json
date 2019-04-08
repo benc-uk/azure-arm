@@ -13,15 +13,20 @@
       "metadata": {
         "description": "Storage account key"
       }
-    }    
+    },
+    "password": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Login password"
+      }
+    }      
   },
   "variables": {
     "containerName": "code-server",
     "containerDNS": "[concat(variables('containerName'), '-', uniqueString(subscription().subscriptionId))]",
     "image": "codercom/code-server",
     "port": "80",
-    "password": "test888",
-    "command-line": ["code-server", "--allow-http", "[concat('--password=', variables('password'))]", "[concat('--port=', variables('port'))]"],
+    "command-line": ["code-server", "--allow-http", "[concat('--password=', parameters('password'))]", "[concat('--port=', variables('port'))]"],
     "project-share": "code-server-proj",
     "data-share": "code-server-data"
   },

@@ -6,7 +6,7 @@
       "value": "changeme"
     },
     "existingPlan": {
-      "value": ""
+      "value": "myResGroup/myAppPlan"
     },
     "registryName": {
       "value": "changeme"

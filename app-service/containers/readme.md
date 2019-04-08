@@ -17,17 +17,17 @@
 ## Parameters
 ### web-app-acr
 - `siteName`: Web app name (globally unique)
-- `existingPlan`: Resource group and name of existing App Service Plan, separated with forward slash, e.g. `myResGrp/appPlanBlah`
+- `existingPlan`: Resource group and name of existing App Service plan, separated with forward slash, e.g. `myResGrp/appPlanBlah`
 - `registryName`: Name of existing ACR instance
 - `registryPassword`: Admin password for ACR
 - `imageNameTag`: Name and tag of your image
 
 ### web-app-public
 - `siteName`: Web app name (globally unique)
-- `existingPlan`: Resource group and name of existing App Service Plan, separated with forward slash, e.g. `myResGrp/appPlanBlah`
+- `existingPlan`: Resource group and name of existing App Service plan, separated with forward slash, e.g. `myResGrp/appPlanBlah`
 - `imageNameTag`: Name and tag of your image
 
 
 ### Notes
-- The templates do not deploy an App Service Plan, this must exist first. See [this template to deploy a plan prior to using this template](../service-plans)
+- The templates **do not deploy an App Service Plan**, this must exist first. See [this template to deploy a plan prior to using this template](../service-plans)
 - The Azure Container Registry (ACR) must exist and contain the container image prior to deployment
