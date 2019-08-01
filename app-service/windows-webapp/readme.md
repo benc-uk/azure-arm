@@ -7,8 +7,8 @@
 - Web App (Windows)
 
 ## Quick Deploy
-### Using Azure Container Registry
-[![deploy](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/azuredeploy-wafc.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbenc-uk%2Fazure-arm%2Fmaster%2Fapp-service%2Fbasic-webapp%2Fweb-app-git.json)  
+### Using Azure Web App
+[![deploy](https://raw.githubusercontent.com/benc-uk/azure-arm/master/etc/azuredeploy-web.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fbenc-uk%2Fazure-arm%2Fmaster%2Fapp-service%2Fbasic-webapp%2Fweb-app-git.json)  
  
 
 ## Parameters
