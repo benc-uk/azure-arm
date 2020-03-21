@@ -73,7 +73,7 @@
       "type": "string"
     },
     "newContainerState": {
-      "value": "[reference(parameters('containerName')).state]",
+      "value": "[reference(parameters('containerName')).provisioningState]",
       "type": "string"
     }
   }
